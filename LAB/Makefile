@@ -13,7 +13,7 @@ DIRINC_TEST_PIPEX = ./INCLUDES
 INCFILES = 			${DIRINC_TEST_PIPEX}/test_pipex.h
 
 DIR_SRCS = 			./SRCS/
-SRCS = 				pipe.c
+SRCS = 				env.c
 
 OBJ = ${SRCS:.c=.o}
 
