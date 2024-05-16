@@ -6,13 +6,13 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/04 07:48:03 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/16 18:32:12 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../INCLUDES/pipex.h"
 
-void	free_all(t_pipex *data)
+void	free_all(t_pipex *data, int merror)
 {
 	int i;
 	
@@ -30,6 +30,8 @@ void	free_all(t_pipex *data)
 			free(data->cmds[i]);
 		free(data->pipe_tab);
 	}
+	if (merror == 1)
+		ft_printf("- MALLOC ERROR ! -\n");
 }
 
 void	init_struct(t_pipex *data, int argc)
@@ -41,6 +43,8 @@ void	init_struct(t_pipex *data, int argc)
 	data->pipe_count = data->cmd_count - 1;
 	data->infile = NULL;
 	data->outfile = NULL;
+	data->path = NULL;
+	data->path_bin = NULL;
 	data->cmds = malloc(data->cmd_count * sizeof(char *));
 	if (!data->cmds)
 		exit(EXIT_FAILURE);
@@ -53,18 +57,13 @@ void	init_struct(t_pipex *data, int argc)
 		data->pipe_tab[i] = malloc(2 * sizeof(int));
 		if (!data->pipe_tab[i])
 		{
-			free_all(data);
+			free_all(data, TRUE);
 			exit(EXIT_FAILURE);
 		}
 	}
 }
 
-void check_args(char **argv)
-{
-	
-}
-
-void	fill_struct(t_pipex *data, int argc, char **argv)
+void	fill_struct(t_pipex *data, int argc, char **argv, char **envp)
 {
 	int arg_i;
 	int	cmd_i;
@@ -80,33 +79,40 @@ void	fill_struct(t_pipex *data, int argc, char **argv)
 	{
 		data->cmds[cmd_i] = ft_strdup(argv[arg_i]);
 		arg_i++;
+		cmd_i++;
 	}
-	check_args()?	
+}
+
+void	go_fork(t_pipex *data, int argc, char **argv, char **envp)
+{
+	pid_t	pid;
+	
+	fill_struct(data, argc, argv, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
-	int pid;
-	int	ret;
 	
-	if (argc <= 3)
+	if (argc < 5)
+	{
+		ft_printf("- Too few arguments... -\n");
 		exit(EXIT_FAILURE);
-	infile = argv[1];
-	cmd_arg = ft_split(argv[2], ' ');
-	cmd = ft_strdup(cmd_arg[0]);
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	else if (!pid)
-	{
-		ret = execve(cmd, cmd_arg, envp);
 	}
-	else
+	data.infile = open(argv[1], O_RDONLY);
+	if (data.infile == -1)
 	{
-		wait(NULL);
+		ft_printf("- INFILE provided is incorrect or doesn't exist ! -\n");
+		exit(EXIT_FAILURE);	
 	}
-	return (0);
+	data.outfile = open(argv[argc - 1], O_CREAT, O_TRUNC, O_WRONLY, 0777);
+	if (data.outfile == -1)
+	{
+		ft_printf("- Error(s) occured when trying to create or modify OUTFILE\n");
+		exit(EXIT_FAILURE);
+	}
+	init_struct(&data, argc);
+	go_fork(&data, argc, argv, envp);
 }
 
 //argv[2] = "ping google.fr"
