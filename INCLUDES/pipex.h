@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/16 18:17:00 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/25 22:19:20 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,25 @@
 # include "../LIBFT/INCLUDES/ft_printf.h"
 # include "../LIBFT/INCLUDES/get_next_line_bonus.h"
 
-# define TRUE 1
-# define FALSE 0
+# define MALLOC_ERROR 2
+# define FORK_ERROR 3
+# define PIPE_ERROR 4
+# define ACCESS_ERROR 5
 
 typedef struct s_pipex
 {
 	int	cmd_count;
+	int	executed_cmd;
 	int	pipe_count;
 	char *infile;
 	char *outfile;
-	char *path;
+	char *all_path;
 	char *path_bin;
 	char **cmds;
 	int	is_heredoc;
-	int **pipe_tab;
+	pid_t	child_pid;
+	int	fd[2];
+	// int **pipe_tab;
 	
 }	t_pipex;
 

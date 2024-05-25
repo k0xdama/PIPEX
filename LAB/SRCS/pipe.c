@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	cmd = ft_split("cat", ' ');
 	cmd1 = ft_split("wc -l", ' ');
-	infile = open("input")
+	infile = open("input");
 	if (pipe(fd) == -1)
 		exit(EXIT_FAILURE);
 	pid = fork();

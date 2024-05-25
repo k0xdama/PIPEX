@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/18 23:03:52 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/25 20:16:02 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_struct(t_pipex *data, int argc)
 
 	i = 0;
 	data->cmd_count = argc - 3;
+	data->executed_cmd = 0;
 	data->pipe_count = data->cmd_count - 1;
 	data->infile = NULL;
 	data->outfile = NULL;
@@ -27,18 +28,21 @@ void	init_struct(t_pipex *data, int argc)
 	if (!data->cmds)
 		exit(EXIT_FAILURE);
 	data->is_heredoc = 0;
-	data->pipe_tab = malloc(data->pipe_count * sizeof(int *));
-	if (data->pipe_tab == NULL)
-		exit(EXIT_FAILURE);
-	while(data->pipe_tab[i++])
-	{
-		data->pipe_tab[i] = malloc(2 * sizeof(int));
-		if (!data->pipe_tab[i])
-		{
-			free_all(data, TRUE);
-			exit(EXIT_FAILURE);
-		}
-	}
+	data->child_pid = 0;
+	data->fd[0] = 0;
+	data->fd[1] = 0;
+	// data->pipe_tab = malloc(data->pipe_count * sizeof(int *));
+	// if (data->pipe_tab == NULL)
+	// 	exit(EXIT_FAILURE);
+	// while(data->pipe_tab[i++])
+	// {
+	// 	data->pipe_tab[i] = malloc(2 * sizeof(int));
+	// 	if (!data->pipe_tab[i])
+	// 	{
+	// 		free_all(data, TRUE);
+	// 		exit(EXIT_FAILURE);
+	// 	}
+	// }
 }
 
 void	fill_struct(t_pipex *data, int argc, char **argv, char **envp)
