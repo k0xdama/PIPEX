@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/25 22:19:20 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/26 17:57:40 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,17 @@ typedef struct s_pipex
 	int	cmd_count;
 	int	executed_cmd;
 	int	pipe_count;
-	char *infile;
-	char *outfile;
+	int infile;
+	int outfile;
 	char *all_path;
 	char *path_bin;
 	char **cmds;
 	int	is_heredoc;
 	pid_t	child_pid;
 	int	fd[2];
-	// int **pipe_tab;
-	
 }	t_pipex;
 
-
+void	init_struct(t_pipex *data, int argc);
+void	fill_struct(t_pipex *data, int argc, char **argv, char **envp);
 
 #endif

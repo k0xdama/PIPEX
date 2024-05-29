@@ -6,13 +6,13 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/25 22:20:52 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/26 17:55:57 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../INCLUDES/pipex.h"
 
-char *search_bin(t_pipex *data, char **envp)
+char *search_bin(t_pipex *data)
 {
 	char **tab_path;
 	char *path_to_try;
@@ -36,6 +36,9 @@ char *search_bin(t_pipex *data, char **envp)
 
 void	go_exec(t_pipex *data, char **envp)
 {
+	char **cmd_args;
+	
+	cmd_args = ft_split((*(data->cmds)), ' ');
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH", 4) != 0)
@@ -46,11 +49,11 @@ void	go_exec(t_pipex *data, char **envp)
 			envp++;
 		}
 	}
-	data->path_bin = search_bin(data, envp);
+	data->path_bin = search_bin(data);
 	if (!data->path_bin)
 		clean_exit(ACCESS_ERROR);
 	else
-		execve();
+		execve(data->path_bin, cmd_args, envp);
 }
 
 void	last_cmd(t_pipex *data, char **envp)
