@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/26 17:55:57 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/29 21:54:43 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	go_exec(t_pipex *data, char **envp)
 	}
 	data->path_bin = search_bin(data);
 	if (!data->path_bin)
-		clean_exit(ACCESS_ERROR);
+		clean_exit(data, ACCESS_ERROR);
 	else
 		execve(data->path_bin, cmd_args, envp);
 }
@@ -60,7 +60,7 @@ void	last_cmd(t_pipex *data, char **envp)
 {
 	data->child_pid = fork();
 	if (data->child_pid == -1)
-		clean_exit(FORK_ERROR);
+		clean_exit(data, FORK_ERROR);
 	if (!data->child_pid)
 	{
 		close(data->fd[1]);
@@ -79,11 +79,12 @@ void	while_cmd(t_pipex *data, char **envp)
 {
 	while(data->executed_cmd != (data->cmd_count - 1))
 	{
+		//dprintf(2, "\n\npipe ivi\n\n");
 		if (pipe(data->fd) == -1)
-			clean_exit(PIPE_ERROR);
+			clean_exit(data, PIPE_ERROR);
 		data->child_pid = fork();
 		if (data->child_pid == -1)
-			clean_exit(FORK_ERROR);
+			clean_exit(data, FORK_ERROR);
 		if (!data->child_pid)
 		{
 			close(data->fd[0]);
@@ -109,21 +110,23 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5)
 	{
 		ft_printf("- Too few arguments... -\n");
-		exit(EXIT_FAILURE);
+		clean_exit(&data, EXIT_FAILURE);
 	}
 	init_struct(&data, argc);
+	// donner le path
 	data.infile = open(argv[1], O_RDONLY);
 	if (data.infile == -1 && ft_strncmp(argv[1], "here_doc", 8) != 0)
 	{
 		ft_printf("- INFILE provided is incorrect or doesn't exist ! -\n");
-		exit(EXIT_FAILURE);	
+		clean_exit(&data, EXIT_FAILURE);	
 	}
 	data.outfile = open(argv[argc - 1], O_CREAT, O_TRUNC, O_WRONLY, 0777);
 	if (data.outfile == -1)
 	{
 		ft_printf("- Error(s) occured when trying to create or modify OUTFILE\n");
-		exit(EXIT_FAILURE);
+		clean_exit(&data, EXIT_FAILURE);
 	}
-	fill_struct(&data, argc, argv, envp);
+	fill_struct(&data, argc, argv);
 	while_cmd(&data, envp);
+	clean_exit(&data, EXIT_SUCCESS);
 }
