@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/29 21:54:43 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/30 20:55:25 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	go_exec(t_pipex *data, char **envp)
 		}
 	}
 	data->path_bin = search_bin(data);
+	// dprintf(2, "%s\n", data->path_bin);
 	if (!data->path_bin)
 		clean_exit(data, ACCESS_ERROR);
 	else
@@ -63,13 +64,14 @@ void	last_cmd(t_pipex *data, char **envp)
 		clean_exit(data, FORK_ERROR);
 	if (!data->child_pid)
 	{
-		close(data->fd[1]);
+		// close(data->fd[1]);
 		dup2(data->outfile, STDOUT_FILENO);
+		dprintf(2, "outfile = %d\n", data->outfile);
 		go_exec(data, envp);
 	}
 	else
 	{
-		close(data->fd[0]);
+		// close(data->fd[0]);
 		close(data->infile);
 		close(data->outfile);
 	}
@@ -79,7 +81,6 @@ void	while_cmd(t_pipex *data, char **envp)
 {
 	while(data->executed_cmd != (data->cmd_count - 1))
 	{
-		//dprintf(2, "\n\npipe ivi\n\n");
 		if (pipe(data->fd) == -1)
 			clean_exit(data, PIPE_ERROR);
 		data->child_pid = fork();
@@ -87,7 +88,7 @@ void	while_cmd(t_pipex *data, char **envp)
 			clean_exit(data, FORK_ERROR);
 		if (!data->child_pid)
 		{
-			close(data->fd[0]);
+			// close(data->fd[0]);
 			if (data->executed_cmd == 0)
 				dup2(data->infile, STDIN_FILENO);
 			dup2(data->fd[1], STDOUT_FILENO);
@@ -95,7 +96,7 @@ void	while_cmd(t_pipex *data, char **envp)
 		}
 		else
 		{
-			close(data->fd[1]);
+			// close(data->fd[1]);
 			dup2(data->fd[0], STDIN_FILENO);
 			data->executed_cmd++;
 		}
@@ -113,7 +114,6 @@ int	main(int argc, char **argv, char **envp)
 		clean_exit(&data, EXIT_FAILURE);
 	}
 	init_struct(&data, argc);
-	// donner le path
 	data.infile = open(argv[1], O_RDONLY);
 	if (data.infile == -1 && ft_strncmp(argv[1], "here_doc", 8) != 0)
 	{
@@ -128,5 +128,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	fill_struct(&data, argc, argv);
 	while_cmd(&data, envp);
+	wait_child(&data);
 	clean_exit(&data, EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/29 20:53:56 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/05/30 19:30:44 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_pipex
 
 void	init_struct(t_pipex *data, int argc);
 void	fill_struct(t_pipex *data, int argc, char **argv);
+void	wait_child(t_pipex *data);
 void	clean_exit(t_pipex *data, int exit_code);
 void	free_all(t_pipex *data);
 
