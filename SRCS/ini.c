@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/29 20:53:51 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/03 21:50:05 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ void	init_struct(t_pipex *data, int argc)
 	data->infile = 0;
 	data->outfile = 0;
 	data->path_bin = NULL;
-	data->cmds = malloc(data->cmd_count * sizeof(char *));
+	data->cmds = malloc((data->cmd_count + 1) * sizeof(char *));
 	if (!data->cmds)
 		exit(EXIT_FAILURE);
 	data->is_heredoc = 0;
 	data->child_pid = 0;
 	data->fd[0] = 0;
 	data->fd[1] = 0;
+	data->old_read_fd = 0;
 }
 
 void	fill_struct(t_pipex *data, int argc, char **argv)
@@ -47,4 +48,5 @@ void	fill_struct(t_pipex *data, int argc, char **argv)
 		arg_i++;
 		cmd_i++;
 	}
+	data->cmds[cmd_i] = NULL;// ft_strdup(argv[arg_i]);
 }

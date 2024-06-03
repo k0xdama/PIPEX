@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/30 19:30:44 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/03 21:28:34 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,13 @@ typedef struct s_pipex
 	int	is_heredoc;
 	pid_t	child_pid;
 	int	fd[2];
+	int old_read_fd;
 }	t_pipex;
 
 void	init_struct(t_pipex *data, int argc);
 void	fill_struct(t_pipex *data, int argc, char **argv);
+void	go_exec(t_pipex *data, char **envp);
+char 	*search_bin(t_pipex *data);
 void	wait_child(t_pipex *data);
 void	clean_exit(t_pipex *data, int exit_code);
 void	free_all(t_pipex *data);

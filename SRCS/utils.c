@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:02:23 by pmateo            #+#    #+#             */
-/*   Updated: 2024/05/30 19:37:29 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/03 21:48:40 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ void	free_all(t_pipex *data)
 {
 	int i;
 	
-	i = 0;
+	i = -1;
 	if (data->cmds)
 	{
-		while (data->cmds[i++])
+		while (data->cmds[++i])
 			free(data->cmds[i]);
 		free(data->cmds);
 		data->cmds = NULL;
