@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:43:32 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/03 21:56:18 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/04 19:00:53 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	go_exec(t_pipex *data, char **envp)
 		}
 	}
 	data->path_bin = search_bin(data);
-	dprintf(2, "[[[[[%s]]]]]\n", data->path_bin);
 	if (!data->path_bin)
 		clean_exit(data, ACCESS_ERROR);
 	else

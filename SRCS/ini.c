@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/03 21:50:05 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/04 19:00:22 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_struct(t_pipex *data, int argc)
 	data->child_pid = 0;
 	data->fd[0] = 0;
 	data->fd[1] = 0;
-	data->old_read_fd = 0;
+	data->old_read_fd = -1;
 }
 
 void	fill_struct(t_pipex *data, int argc, char **argv)
@@ -48,5 +48,5 @@ void	fill_struct(t_pipex *data, int argc, char **argv)
 		arg_i++;
 		cmd_i++;
 	}
-	data->cmds[cmd_i] = NULL;// ft_strdup(argv[arg_i]);
+	data->cmds[cmd_i] = NULL;
 }
