@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/05 01:51:36 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:16:51 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_pipex
 	char *path_bin;
 	char **cmds;
 	int	is_heredoc;
+	int heredoc_fd;
 	char *limiter;
 	pid_t	child_pid;
 	int	fd[2];

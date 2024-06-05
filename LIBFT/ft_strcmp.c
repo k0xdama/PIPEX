@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstprint.c                                      :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 02:52:47 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/05 19:43:29 by pmateo           ###   ########.fr       */
+/*   Created: 2024/06/05 21:42:44 by pmateo            #+#    #+#             */
+/*   Updated: 2024/06/05 21:44:46 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "INCLUDES/libft.h"
 
-void	ft_lstprint(t_list *lst)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	while (lst)
-	{
-		ft_printf(1, "&cell = %p\n", lst);
-		ft_printf(1, "content_cell = %d\n", *((int *)lst->content));
-		ft_printf(1, "&next_cell = %p\n", lst->next);
-		ft_printf(1, "|\n|\n|\n");
-		lst = lst->next;
-	}
-	ft_printf(1, "&cell = NULL\n");
-	ft_printf(1, "content_cell = NULL\n");
-	ft_printf(1, "&next_cell = NULL\n");
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
