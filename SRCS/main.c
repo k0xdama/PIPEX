@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/04 21:48:00 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 01:52:47 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 void	first_cmd(t_pipex *data, char **argv)
 {
-	data->infile = open(argv[1], O_RDONLY);
-	if (data->infile == -1 && ft_strncmp(argv[1], "here_doc", 8) != 0)
+	if (data->is_heredoc == 0)
 	{
-		ft_printf("- INFILE provided is incorrect or doesn't exist ! -\n");
-		clean_exit(data, EXIT_FAILURE);	
+		data->infile = open(argv[1], O_RDONLY);
+		if (data->infile == -1)
+		{
+			ft_printf("- INFILE provided is incorrect or doesn't exist ! -\n");
+			clean_exit(data, EXIT_FAILURE);	
+		}
+	}
+	else
+	{
+		
 	}
 	dup2(data->infile, STDIN_FILENO);
 	close(data->infile);
@@ -26,7 +33,7 @@ void	first_cmd(t_pipex *data, char **argv)
 
 void	last_cmd(t_pipex *data, int argc, char **argv)
 {
-	data->outfile = open(argv[argc - 1], O_WRONLY ,O_CREAT, O_TRUNC, 0755);
+	data->outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (data->outfile == -1)
 	{
 		// ft_printf("- Error(s) occured when trying to create or modify OUTFILE\n");
@@ -87,6 +94,11 @@ int	main(int argc, char **argv, char **envp)
 	}
 	init_struct(&data, argc);
 	fill_struct(&data, argc, argv);
+	if (ft_strncmp("here_doc", argv[1], 8) == 0)
+	{
+		data.is_heredoc = 1;
+		data.limiter = ft_strdup(argv[2]);
+	}
 	while (data.executed_cmd != data.cmd_count)
 	{
 		while_cmd(&data, argc, argv, envp);

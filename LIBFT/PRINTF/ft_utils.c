@@ -6,13 +6,13 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 09:04:01 by pmateo            #+#    #+#             */
-/*   Updated: 2024/01/08 17:09:46 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 02:07:45 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/ft_printf.h"
 
-void	up_struct(t_flags *flags)
+void	up_struct(int fd, t_flags *flags)
 {
 	flags->width_field = 0;
 	flags->dot_field = 0;
@@ -23,14 +23,15 @@ void	up_struct(t_flags *flags)
 	flags->plus = 0;
 	flags->dash = 0;
 	flags->dot = 0;
+	flags->fd = fd;
 }
 
-int	ft_putchar_with_ret(char c)
+int	ft_putchar_with_ret(int fd, char c)
 {
-	return (write(1, &c, 1));
+	return (write(fd, &c, 1));
 }
 
-int	ft_putstr(const char *str)
+int	ft_putstr(int fd, const char *str)
 {
 	int	printed;
 	int	len;
@@ -39,12 +40,12 @@ int	ft_putstr(const char *str)
 	len = ft_strlen(str);
 	if (str == NULL)
 	{
-		printed += write(1, "(null)", 6);
+		printed += write(fd, "(null)", 6);
 		return (printed);
 	}
 	else
 	{
-		printed += write(1, str, len);
+		printed += write(fd, str, len);
 		return (printed);
 	}
 }

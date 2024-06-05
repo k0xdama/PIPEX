@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:44:36 by pmateo            #+#    #+#             */
-/*   Updated: 2024/01/08 16:36:10 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 02:15:34 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_ptrlen(unsigned long ptr)
 	return (i);
 }
 
-static int	ft_putptr(uintptr_t ptr)
+static int	ft_putptr(uintptr_t ptr, t_flags *flags)
 {
 	int		len;
 	char	*base;
@@ -33,16 +33,16 @@ static int	ft_putptr(uintptr_t ptr)
 	len = ft_ptrlen((unsigned long)ptr);
 	base = "0123456789abcdef";
 	if (ptr < 16)
-		ft_putchar_with_ret(base[ptr]);
+		ft_putchar_with_ret(flags->fd, base[ptr]);
 	if (ptr >= 16)
 	{
-		ft_putptr(ptr / 16);
-		ft_putptr(ptr % 16);
+		ft_putptr(ptr / 16, flags);
+		ft_putptr(ptr % 16, flags);
 	}
 	return (len);
 }
 
-static int	dash_on(uintptr_t ptr, int *width_size)
+static int	dash_on(uintptr_t ptr, int *width_size, t_flags *flags)
 {
 	int	printed;
 	int	printed_width;
@@ -50,30 +50,30 @@ static int	dash_on(uintptr_t ptr, int *width_size)
 	printed = 0;
 	printed_width = 0;
 	if (ptr == 0)
-		printed += ft_putstr("(nil)");
+		printed += ft_putstr(flags->fd, "(nil)");
 	else
 	{
-		printed += ft_putstr("0x");
-		printed += ft_putptr(ptr);
+		printed += ft_putstr(flags->fd, "0x");
+		printed += ft_putptr(ptr, flags);
 		while (printed_width < (*width_size))
-			printed_width += ft_putchar_with_ret(' ');
+			printed_width += ft_putchar_with_ret(flags->fd, ' ');
 	}
 	return (printed + printed_width);
 }
 
-static int	dash_off(uintptr_t ptr, int *width_size)
+static int	dash_off(uintptr_t ptr, int *width_size, t_flags *flags)
 {
 	int	printed;
 
 	printed = 0;
 	while (printed < (*width_size))
-		printed += ft_putchar_with_ret(' ');
+		printed += ft_putchar_with_ret(flags->fd, ' ');
 	if (ptr == 0)
-		printed += ft_putstr("(nil)");
+		printed += ft_putstr(flags->fd, "(nil)");
 	else
 	{
-		printed += ft_putstr("0x");
-		printed += ft_putptr(ptr);
+		printed += ft_putstr(flags->fd, "0x");
+		printed += ft_putptr(ptr, flags);
 	}
 	return (printed);
 }
@@ -93,9 +93,9 @@ int	ft_printptr(uintptr_t ptr, t_flags *flags)
 	if (ptr == 0)
 		width_size += 2;
 	if (flags->dash == 1)
-		printed += dash_on(ptr, &width_size);
+		printed += dash_on(ptr, &width_size, flags);
 	else if (flags->dash == 0)
-		printed += dash_off(ptr, &width_size);
+		printed += dash_off(ptr, &width_size, flags);
 	return (printed);
 }
 

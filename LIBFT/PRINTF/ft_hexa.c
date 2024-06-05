@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:44:43 by pmateo            #+#    #+#             */
-/*   Updated: 2024/01/08 16:36:10 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 02:11:38 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static int	ft_puthexa(unsigned int nbr, int bool, t_flags *flags, int callnb)
 	if (nbr == 0 && (flags->dot == 1 && flags->dot_field == 0 && callnb == 1))
 		return (0);
 	if (nbl < 16 && bool == 0)
-		ft_putchar_with_ret(basemin[nbl]);
+		ft_putchar_with_ret(flags->fd, basemin[nbl]);
 	else if (nbl < 16 && bool == 1)
-		ft_putchar_with_ret(basemaj[nbl]);
+		ft_putchar_with_ret(flags->fd, basemaj[nbl]);
 	if (nbl >= 16)
 	{
 		ft_puthexa(nbl / 16, bool, flags, ++callnb);
@@ -49,18 +49,18 @@ static int	dash_on(unsigned int nbr, t_flags *flags, int *prec, int *width)
 	if (flags->htag == 2 && nbr > 0)
 	{
 		if (flags->hex_cap == 1)
-			printed += ft_putstr("0X");
+			printed += ft_putstr(flags->fd, "0X");
 		else
-			printed += ft_putstr("0x");
+			printed += ft_putstr(flags->fd, "0x");
 	}
 	while (printed_prec < (*prec) && flags->dot == 1)
-		printed_prec += ft_putchar_with_ret('0');
+		printed_prec += ft_putchar_with_ret(flags->fd, '0');
 	if (flags->hex_cap == 1)
 		printed += ft_puthexa(nbr, 1, flags, 1);
 	else
 		printed += ft_puthexa(nbr, 0, flags, 1);
 	while (printed_width < (*width))
-		printed_width += ft_putchar_with_ret(' ');
+		printed_width += ft_putchar_with_ret(flags->fd, ' ');
 	return (printed + printed_prec + printed_width);
 }
 
@@ -73,18 +73,18 @@ static int	dash_off(unsigned int nbr, t_flags *flags, int *prec, int *width)
 	printed_prec = 0;
 	while (printed < (*width)
 		&& (flags->zero == 0 || flags->dot == 1))
-		printed += ft_putchar_with_ret(' ');
+		printed += ft_putchar_with_ret(flags->fd, ' ');
 	if (flags->htag == 2 && nbr > 0)
 	{
 		if (flags->hex_cap == 1)
-			printed += ft_putstr("0X");
+			printed += ft_putstr(flags->fd, "0X");
 		else
-			printed += ft_putstr("0x");
+			printed += ft_putstr(flags->fd, "0x");
 	}
 	while (printed_prec < (*prec) && flags->dot == 1)
-		printed_prec += ft_putchar_with_ret('0');
+		printed_prec += ft_putchar_with_ret(flags->fd, '0');
 	while (printed < (*width) && flags->zero == 1)
-		printed += ft_putchar_with_ret('0');
+		printed += ft_putchar_with_ret(flags->fd, '0');
 	if (flags->hex_cap == 1)
 		printed += ft_puthexa(nbr, 1, flags, 1);
 	else

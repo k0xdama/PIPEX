@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 03:45:42 by pmateo            #+#    #+#             */
-/*   Updated: 2024/03/20 14:35:48 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 02:09:02 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ typedef struct s_flags
 	int			plus;
 	int			dash;
 	int			dot;
+	int			fd;
 }				t_flags;
 
 int		ft_nbrlen(long int nb, int base, t_flags *flags);
-int		ft_putchar_with_ret(char c);
-int		ft_putstr(const char *str);
+int		ft_putchar_with_ret(int fd, char c);
+int		ft_putstr(int fd, const char *str);
 int		ft_miniatoi(const char *str, int *i);
-void	up_struct(t_flags *flags);
+void	up_struct(int fd, t_flags *flags);
 int		pathfinder1(const char *str, va_list args, t_flags *flags, int *i);
 void	pathfinder2(const char *str, t_flags *flags, int *i);
 int		conv_specifiers(const char *str, va_list args, t_flags *flags, int *i);
-int		ft_printf(const char *str, ...);
+int		ft_printf(int fd, const char *str, ...);
 int		ft_printchar(int c, t_flags *flags);
 int		ft_printstr(const char *str, t_flags *flags);
 int		ft_printptr(uintptr_t ptr, t_flags *flags);

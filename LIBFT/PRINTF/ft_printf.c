@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:44:38 by pmateo            #+#    #+#             */
-/*   Updated: 2024/03/20 14:35:41 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 02:08:30 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	pathfinder1(const char *str, va_list args, t_flags *flags, int *i)
 	return (printed);
 }
 
-int	ft_printf(const char *str, ...)
+int	ft_printf(int fd, const char *str, ...)
 {
 	int		i;
 	int		printed;
@@ -102,12 +102,12 @@ int	ft_printf(const char *str, ...)
 	{
 		if (str[i] == '%')
 		{
-			up_struct(&flags);
+			up_struct(fd, &flags);
 			printed += pathfinder1(str, args, &flags, &i);
 		}
 		else
 		{
-			printed += ft_putchar_with_ret(str[i]);
+			printed += ft_putchar_with_ret(fd, str[i]);
 			i++;
 		}
 	}

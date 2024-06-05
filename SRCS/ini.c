@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/04 19:00:22 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 01:51:50 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	init_struct(t_pipex *data, int argc)
 {
-	int	i;
-
-	i = 0;
 	data->cmd_count = argc - 3;
 	data->executed_cmd = 0;
 	data->pipe_count = data->cmd_count - 1;
@@ -27,6 +24,7 @@ void	init_struct(t_pipex *data, int argc)
 	if (!data->cmds)
 		exit(EXIT_FAILURE);
 	data->is_heredoc = 0;
+	data->limiter = NULL;
 	data->child_pid = 0;
 	data->fd[0] = 0;
 	data->fd[1] = 0;

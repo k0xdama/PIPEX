@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:44:31 by pmateo            #+#    #+#             */
-/*   Updated: 2024/01/08 16:42:15 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/05 02:16:15 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static	int	ft_putstr2(const char *str, t_flags *flags)
 			return (0);
 		else
 		{
-			printed += write(1, "(null)", 6);
+			printed += write(flags->fd, "(null)", 6);
 			return (printed);
 		}
 	}
 	else
 	{
-		printed += write(1, str, len);
+		printed += write(flags->fd, str, len);
 		return (printed);
 	}
 }
@@ -67,7 +67,7 @@ int	ft_printstr(const char *str, t_flags *flags)
 	if (flags->dash == 1)
 		printed += ft_putstr2(str, flags);
 	while (printed_width < width_size)
-		printed_width += ft_putchar_with_ret(' ');
+		printed_width += ft_putchar_with_ret(flags->fd, ' ');
 	if (flags->dash == 0)
 		printed += ft_putstr2(str, flags);
 	return (printed + printed_width);
