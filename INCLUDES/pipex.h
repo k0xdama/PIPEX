@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/05 18:16:51 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/09 19:30:30 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_pipex
 	int outfile;
 	char *all_path;
 	char *path_bin;
+	char *path_to_try;
+	char **tab_path;
 	char **cmds;
 	int	is_heredoc;
 	int heredoc_fd;
@@ -51,9 +53,13 @@ typedef struct s_pipex
 void	init_struct(t_pipex *data, int argc);
 void	fill_struct(t_pipex *data, int argc, char **argv);
 void	go_exec(t_pipex *data, char **envp);
+void	go_exec2(t_pipex *data, char **cmd_args, char **envp);
 char 	*search_bin(t_pipex *data);
+char 	*check_bin_path(t_pipex *data);
 void	wait_child(t_pipex *data);
+size_t	len_to_space(char *str);
 void	clean_exit(t_pipex *data, int exit_code);
-void	free_all(t_pipex *data);
+void	free_child_tab(char **tab);
+void	free_parent_tab(t_pipex *data);
 
 #endif

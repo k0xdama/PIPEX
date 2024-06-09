@@ -6,32 +6,63 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:43:32 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/05 20:02:30 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/09 19:47:20 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/pipex.h"
 
+char *check_bin_path(t_pipex *data)
+{
+	data->path_bin = ft_substr(data->cmds[data->executed_cmd], 0, len_to_space(data->cmds[data->executed_cmd]));
+	if (access(data->path_bin, X_OK) == -1)
+	{
+		free(data->path_bin);
+		return (NULL);
+	}
+	else
+		return (data->path_bin);
+}
+
 char *search_bin(t_pipex *data)
 {
-	char **tab_path;
-	char *path_to_try;
+	char *bin;
 	char *tmp;
-	
-	tab_path = NULL;
-	tab_path = ft_split(data->all_path, ':');
-	while (*tab_path)
+	int	i;
+
+	i = 0;
+	data->tab_path = ft_split(data->all_path, ':');
+	if (!data->tab_path)
+		clean_exit(data, MALLOC_ERROR);
+	while (data->tab_path[i])
 	{
-		path_to_try = NULL;
-		tmp = NULL;
-		tmp = ft_strjoin(*tab_path, "/");
-		path_to_try = ft_strjoin(tmp, (data->cmds[data->executed_cmd]));
-		if (access(path_to_try, X_OK) == -1)
-			tab_path++;
+		tmp = ft_strjoin(data->tab_path[i], "/");
+		bin = ft_substr(data->cmds[data->executed_cmd], 0, len_to_space(data->cmds[data->executed_cmd]));
+		data->path_to_try = ft_strjoin(tmp, bin);
+		free(tmp);
+		free(bin);
+		if (access(data->path_to_try, X_OK) == -1)
+		{
+			i++;
+			free(data->path_to_try);
+		}
 		else
-			return (path_to_try);
+			return (data->path_to_try);
 	}
+	free_child_tab(data->tab_path);
 	return (NULL);
+}
+
+void	go_exec2(t_pipex *data, char **cmd_args, char **envp)
+{
+	if (!data->path_bin)
+	{
+		free(data->path_bin);
+		free_child_tab(cmd_args);
+		clean_exit(data, ACCESS_ERROR);
+	}
+	else
+		execve(data->path_bin, cmd_args, envp);
 }
 
 void	go_exec(t_pipex *data, char **envp)
@@ -39,6 +70,8 @@ void	go_exec(t_pipex *data, char **envp)
 	char **cmd_args;
 	
 	cmd_args = ft_split(((data->cmds[data->executed_cmd])), ' ');
+	if (!cmd_args)
+		clean_exit(data, EXIT_FAILURE);
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH", 4) != 0)
@@ -49,9 +82,10 @@ void	go_exec(t_pipex *data, char **envp)
 			envp++;
 		}
 	}
-	data->path_bin = search_bin(data);
-	if (!data->path_bin)
-		clean_exit(data, ACCESS_ERROR);
+	if (ft_strchr(data->cmds[data->executed_cmd], '/'))
+		data->path_bin = check_bin_path(data);
 	else
-		execve(data->path_bin, cmd_args, envp);
+		data->path_bin = search_bin(data);
+	ft_printf(2, "%s\n", data->path_bin);
+	go_exec2(data, cmd_args, envp);
 }

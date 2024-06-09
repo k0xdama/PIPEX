@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/05 21:51:25 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/09 20:09:37 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	parent(t_pipex *data)
 	data->old_read_fd = data->fd[0];
 	if (data->executed_cmd == data->cmd_count)
 		close(data->fd[0]);
+	if (data->fd[0])
+		close(data->fd[0]);
 }
 
 void	while_cmd(t_pipex *data, int argc, char **argv, char **envp)
@@ -98,6 +100,8 @@ void	while_cmd(t_pipex *data, int argc, char **argv, char **envp)
 			first_cmd(data, argv);
 		if (data->executed_cmd == data->cmd_count - 1)
 			last_cmd(data, argc, argv);
+		// ft_printf(2, "fd[0] = %i\nfd[1] = %i\noldfd = %i\n", data->fd[0], data->fd[1], data->old_read_fd);
+		// fprintf(stderr, "fd[0]:%i fd[1]:%i prev:%i\n", data->fd[0],data->fd[1],data->old_read_fd);
 		go_exec(data, envp);
 	}
 	else
