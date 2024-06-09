@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:43:32 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/09 19:47:20 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/09 20:35:15 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ void	go_exec(t_pipex *data, char **envp)
 		data->path_bin = check_bin_path(data);
 	else
 		data->path_bin = search_bin(data);
-	ft_printf(2, "%s\n", data->path_bin);
+	// ft_printf(2, "%s\n", data->path_bin);
 	go_exec2(data, cmd_args, envp);
 }

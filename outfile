@@ -1,1 +1,15 @@
-      0       0       0
+INCLUDES
+LAB
+LIBFT
+Makefile
+SRCS
+execve.o
+infile
+ini.o
+main.o
+outfile
+outfilemake
+pipex
+readline.supp
+test
+utils.o
