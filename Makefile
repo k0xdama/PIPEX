@@ -6,7 +6,7 @@
 #    By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 16:12:41 by pmateo            #+#    #+#              #
-#    Updated: 2024/06/04 21:35:09 by pmateo           ###   ########.fr        #
+#    Updated: 2024/06/10 15:51:52 by pmateo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ DIRINC_PIPEX = ./INCLUDES
 INCFILES = 			${DIRINC_PIPEX}/pipex.h
 
 DIR_SRCS = 			./SRCS/
-SRCS = 				main.c ini.c utils.c execve.c
+SRCS = 				main.c ini.c utils.c execve.c here_doc.c
 
 OBJ = ${SRCS:.c=.o}
 

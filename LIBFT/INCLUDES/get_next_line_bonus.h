@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 19:19:10 by pmateo            #+#    #+#             */
-/*   Updated: 2024/04/18 16:36:41 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/10 21:29:59 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@
 # endif
 
 size_t		ft_strlen_gnl(const char *str, int c);
-char		*get_next_line(int fd);
+char		*get_next_line(int fd, int freestash);
 
 #endif

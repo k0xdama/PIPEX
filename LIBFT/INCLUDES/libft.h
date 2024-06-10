@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 22:11:19 by u4s2e0r           #+#    #+#             */
-/*   Updated: 2024/06/05 21:45:11 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/10 21:30:01 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				ft_lstprint(t_list *lst);
 int					ft_printf(int fd, const char *str, ...);
-char				*get_next_line(int fd);
+char				*get_next_line(int fd, int freestash);
 
 #endif

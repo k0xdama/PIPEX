@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:02:23 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/09 19:55:06 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/10 16:12:31 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	clean_exit(t_pipex *data, int exit_code)
 		exit(EXIT_SUCCESS);
 	else if (exit_code == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
-	close(data->old_read_fd);
 }
 
 void	free_parent_tab(t_pipex *data)

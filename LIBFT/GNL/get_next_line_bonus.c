@@ -6,18 +6,20 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 21:48:56 by pmateo            #+#    #+#             */
-/*   Updated: 2024/04/18 16:36:55 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/10 21:29:48 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/get_next_line_bonus.h"
 
-static	int	read_and_fill(char *buffer, int fd, char **reserve)
+static	int	read_and_fill(char *buffer, int fd, char **reserve, int freestash)
 {
 	ssize_t	read_ret;
 	char	*tmp;
 
 	read_ret = 42;
+	if (freestash)
+		return (-1);
 	if (!*reserve)
 		*reserve = ft_strdup("");
 	while (!ft_strchr(*reserve, '\n') && read_ret != 0)
@@ -54,10 +56,11 @@ static char	*free_last_call(char **reserve)
 {
 	free(*reserve);
 	*reserve = NULL;
+	ft_printf(1, "reserve freed\n");
 	return (NULL);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int freestash)
 {
 	char		*buffer;
 	char		*next_line;
@@ -70,7 +73,7 @@ char	*get_next_line(int fd)
 	buffer = malloc ((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	check_behavior = read_and_fill(buffer, fd, &reserve[fd]);
+	check_behavior = read_and_fill(buffer, fd, &reserve[fd], freestash);
 	free(buffer);
 	buffer = NULL;
 	if (check_behavior == -1)

@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/09 19:30:30 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:51:35 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	go_exec(t_pipex *data, char **envp);
 void	go_exec2(t_pipex *data, char **cmd_args, char **envp);
 char 	*search_bin(t_pipex *data);
 char 	*check_bin_path(t_pipex *data);
+void	handle_heredoc(t_pipex *data);
 void	wait_child(t_pipex *data);
 size_t	len_to_space(char *str);
 void	clean_exit(t_pipex *data, int exit_code);
