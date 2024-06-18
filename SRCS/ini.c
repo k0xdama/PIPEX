@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/09 17:06:19 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:21:29 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_struct(t_pipex *data, int argc)
 
 void	fill_struct(t_pipex *data, int argc, char **argv)
 {
-	int arg_i;
+	int	arg_i;
 	int	cmd_i;
 
 	arg_i = 2;

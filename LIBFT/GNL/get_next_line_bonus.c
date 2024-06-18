@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 21:48:56 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/10 21:29:48 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:47:58 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static char	*free_last_call(char **reserve)
 {
 	free(*reserve);
 	*reserve = NULL;
-	ft_printf(1, "reserve freed\n");
 	return (NULL);
 }
 

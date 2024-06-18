@@ -6,12 +6,12 @@
 #    By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 16:12:41 by pmateo            #+#    #+#              #
-#    Updated: 2024/06/10 15:51:52 by pmateo           ###   ########.fr        #
+#    Updated: 2024/06/11 21:46:44 by pmateo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -Werror -Wextra -Wall -g -g3
+FLAGS = -Werror -Wextra -Wall -g3
 RM = rm -f
 .DEFAULT_GOAL := all
 

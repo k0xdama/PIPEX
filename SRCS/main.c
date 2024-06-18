@@ -6,11 +6,11 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/10 16:39:03 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/11 21:42:46 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../INCLUDES/pipex.h"
+#include "../INCLUDES/pipex.h"
 
 void	first_cmd(t_pipex *data, char **argv)
 {
@@ -18,8 +18,9 @@ void	first_cmd(t_pipex *data, char **argv)
 		data->infile = open(argv[1], O_RDONLY);
 		if (data->infile == -1)
 		{
-			ft_printf(2, "- INFILE provided is incorrect or doesn't exist ! -\n");
-			clean_exit(data, EXIT_FAILURE);	
+			ft_printf(2, "\033[1;5;31m- INFILE provided is incorrect ");
+			ft_printf(2, "or doesn't exist ! -\n\033[0m");
+			clean_exit(data, EXIT_FAILURE);
 		}
 		dup2(data->infile, STDIN_FILENO);
 		close(data->infile);
@@ -28,16 +29,16 @@ void	first_cmd(t_pipex *data, char **argv)
 
 void	last_cmd(t_pipex *data, int argc, char **argv)
 {
-	int flags;
-	
+	int	flags;
+
 	flags = O_WRONLY | O_CREAT | O_TRUNC;
 	if (data->is_heredoc == 1)
 		flags = O_WRONLY | O_CREAT | O_APPEND;
-
 	data->outfile = open(argv[argc - 1], flags, 0755);
 	if (data->outfile == -1)
 	{
-		ft_printf(2, "- Error(s) occured when trying to create or modify OUTFILE\n");
+		ft_printf(2, "\033[1;5;31m- Error(s) occured when trying ");
+		ft_printf(2, "to create or modify OUTFILE -\n\033[0m");
 		clean_exit(data, EXIT_FAILURE);
 	}
 	dup2(data->outfile, STDOUT_FILENO);
@@ -77,7 +78,6 @@ void	while_cmd(t_pipex *data, int argc, char **argv, char **envp)
 			first_cmd(data, argv);
 		if (data->executed_cmd == data->cmd_count - 1)
 			last_cmd(data, argc, argv);
-		// fprintf(stderr, "fd[0]:%i fd[1]:%i prev:%i\n", data->fd[0],data->fd[1],data->old_read_fd);
 		go_exec(data, envp);
 	}
 	else
@@ -87,11 +87,11 @@ void	while_cmd(t_pipex *data, int argc, char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
-	
+
 	if (argc < 5)
 	{
 		ft_printf(1, "\033[1;5;31m- Too few arguments... -\n\033[0m");
-		clean_exit(&data, EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	init_struct(&data, argc);
 	fill_struct(&data, argc, argv);
