@@ -6,7 +6,7 @@
 #    By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 16:12:41 by pmateo            #+#    #+#              #
-#    Updated: 2024/06/11 21:46:44 by pmateo           ###   ########.fr        #
+#    Updated: 2024/06/19 15:49:16 by pmateo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,9 @@ ${NAME}: ${OBJ} ${OBJ_INIT} ${LIBFT} ${INCFILES}
 	${CC} ${FLAGS} -o ${NAME} ${OBJ} ${OBJ_INIT} -I ${DIRINC_PIPEX} -I ${DIRINC_LIBFT} -L ${DIR_LIBFT} -lft
 
 all: ${LIBFT} ${NAME}
+		@echo "\033[1;5;32m# PIPEX READY ! #\033[0m"
+
+bonus: ${LIBFT} ${NAME}
 		@echo "\033[1;5;32m# PIPEX READY ! #\033[0m"
 
 clean:

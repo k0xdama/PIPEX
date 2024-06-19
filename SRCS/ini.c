@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/11 16:21:29 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/19 18:21:30 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_struct(t_pipex *data, int argc)
 	data->pipe_count = data->cmd_count - 1;
 	data->infile = 0;
 	data->outfile = 0;
+	data->all_path = NULL;
 	data->path_bin = NULL;
 	data->path_to_try = NULL;
 	data->tab_path = NULL;
@@ -49,9 +50,12 @@ void	fill_struct(t_pipex *data, int argc, char **argv)
 	}
 	while (arg_i != (argc - 1))
 	{
+		// if (ft_strncmp(argv[arg_i], "\0", 1) && ft_strncmp(argv[arg_i], " ", 1))
 		data->cmds[cmd_i] = ft_strdup(argv[arg_i]);
+		// else
 		arg_i++;
 		cmd_i++;
 	}
-	data->cmds[cmd_i] = NULL;
+	// data->cmds[cmd_i] = NULL;
+	print_tab(data->cmds);
 }

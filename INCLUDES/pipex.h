@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:48:51 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/11 16:26:27 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/19 18:10:34 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ size_t	len_to_space(char *str);
 void	clean_exit(t_pipex *data, int exit_code);
 void	free_child_tab(char **tab);
 void	free_parent_tab(t_pipex *data);
+void	print_tab(char **tab);
 
 #endif

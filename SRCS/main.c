@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/11 21:42:46 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/19 17:44:42 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 void	first_cmd(t_pipex *data, char **argv)
 {
+	data->infile = open(argv[1], O_RDONLY);
+	if (data->infile == -1)
 	{
-		data->infile = open(argv[1], O_RDONLY);
-		if (data->infile == -1)
-		{
-			ft_printf(2, "\033[1;5;31m- INFILE provided is incorrect ");
-			ft_printf(2, "or doesn't exist ! -\n\033[0m");
-			clean_exit(data, EXIT_FAILURE);
-		}
-		dup2(data->infile, STDIN_FILENO);
-		close(data->infile);
+		ft_printf(2, "\033[1;5;31m- INFILE provided is incorrect ");
+		ft_printf(2, "or doesn't exist ! -\n\033[0m");
+		clean_exit(data, EXIT_FAILURE);
 	}
+	dup2(data->infile, STDIN_FILENO);
+	close(data->infile);
 }
 
 void	last_cmd(t_pipex *data, int argc, char **argv)

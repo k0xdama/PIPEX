@@ -6,11 +6,23 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:02:23 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/11 16:42:45 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/19 18:10:25 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/pipex.h"
+
+void	print_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		dprintf(2, "tab[%d] = %s\n", i, tab[i]);
+		i++;
+	}
+}
 
 size_t	len_to_space(char *str)
 {
