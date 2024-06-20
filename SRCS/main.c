@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:51:02 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/19 17:44:42 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/20 03:01:31 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	first_cmd(t_pipex *data, char **argv)
 	{
 		ft_printf(2, "\033[1;5;31m- INFILE provided is incorrect ");
 		ft_printf(2, "or doesn't exist ! -\n\033[0m");
-		clean_exit(data, EXIT_FAILURE);
+		clean_exit(data, NULL, EXIT_FAILURE);
 	}
 	dup2(data->infile, STDIN_FILENO);
 	close(data->infile);
@@ -37,7 +37,7 @@ void	last_cmd(t_pipex *data, int argc, char **argv)
 	{
 		ft_printf(2, "\033[1;5;31m- Error(s) occured when trying ");
 		ft_printf(2, "to create or modify OUTFILE -\n\033[0m");
-		clean_exit(data, EXIT_FAILURE);
+		clean_exit(data, NULL, EXIT_FAILURE);
 	}
 	dup2(data->outfile, STDOUT_FILENO);
 	close(data->outfile);
@@ -57,10 +57,10 @@ void	parent(t_pipex *data)
 void	while_cmd(t_pipex *data, int argc, char **argv, char **envp)
 {
 	if (pipe(data->fd) == -1)
-		clean_exit(data, PIPE_ERROR);
+		clean_exit(data, "pipe", EXIT_FAILURE);
 	data->child_pid = fork();
 	if (data->child_pid == -1)
-		clean_exit(data, FORK_ERROR);
+		clean_exit(data, "fork", EXIT_FAILURE);
 	if (!data->child_pid)
 	{
 		if (data->executed_cmd != 0)
@@ -98,7 +98,7 @@ int	main(int argc, char **argv, char **envp)
 		if (argc < 6)
 		{
 			ft_printf(1, "\033[1;5;31m- Too few arguments... -\n\033[0m");
-			clean_exit(&data, EXIT_FAILURE);
+			clean_exit(&data, NULL, EXIT_FAILURE);
 		}
 		data.is_heredoc = 1;
 		data.limiter = ft_strdup(argv[2]);
@@ -108,5 +108,5 @@ int	main(int argc, char **argv, char **envp)
 		while_cmd(&data, argc, argv, envp);
 	wait_child(&data);
 	unlink("./here_doc");
-	clean_exit(&data, EXIT_SUCCESS);
+	clean_exit(&data, NULL, EXIT_SUCCESS);
 }

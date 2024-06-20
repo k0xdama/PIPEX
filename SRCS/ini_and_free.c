@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ini.c                                              :+:      :+:    :+:   */
+/*   ini_and_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:03:09 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/19 18:21:30 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/20 05:01:46 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	init_struct(t_pipex *data, int argc)
 	data->tab_path = NULL;
 	data->cmds = malloc((data->cmd_count + 1) * sizeof(char *));
 	if (!data->cmds)
-		exit(EXIT_FAILURE);
+		clean_exit(data, "malloc", EXIT_FAILURE);
+	data->cmd_and_args = NULL;
 	data->is_heredoc = 0;
 	data->heredoc_fd = 0;
 	data->limiter = NULL;
@@ -50,12 +51,42 @@ void	fill_struct(t_pipex *data, int argc, char **argv)
 	}
 	while (arg_i != (argc - 1))
 	{
-		// if (ft_strncmp(argv[arg_i], "\0", 1) && ft_strncmp(argv[arg_i], " ", 1))
+		
 		data->cmds[cmd_i] = ft_strdup(argv[arg_i]);
-		// else
 		arg_i++;
 		cmd_i++;
 	}
-	// data->cmds[cmd_i] = NULL;
+	data->cmds[cmd_i] = NULL;
 	print_tab(data->cmds);
+}
+
+void	free_parent_tab(t_pipex *data)
+{
+	int	i;
+
+	i = -1;
+	if (data->cmds)
+	{
+		while (data->cmds[++i])
+		{
+			// dprintf("")
+			free(data->cmds[i]);
+		}
+		free(data->cmds);
+		data->cmds = NULL;
+	}
+}
+
+void	free_child_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	if (tab)
+	{
+		while (tab[++i])
+			free(tab[i]);
+		free(tab);
+		tab = NULL;
+	}
 }

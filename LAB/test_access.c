@@ -5,6 +5,6 @@ int main(void)
 {
     int ret = 0;
 
-    ret = access("/usr/bin/", X_OK);
+    ret = access("/usr/bin", X_OK);
     printf ("%d\n", ret);
 }
