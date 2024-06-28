@@ -6,7 +6,7 @@
 /*   By: pmateo <pmateo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:43:32 by pmateo            #+#    #+#             */
-/*   Updated: 2024/06/20 05:35:45 by pmateo           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:39:33 by pmateo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ static void	search_path(t_pipex *data, char **envp)
 	}
 }
 
-
 void	exec(t_pipex *data, char **envp)
 {
-	dprintf(2, "path_bin = %s\n", data->path_bin);
-	dprintf(2, "all_bin = %s\n", data->all_path);
 	if (!data->path_bin && !data->all_path)
 	{
 		free(data->path_bin);
@@ -69,7 +66,6 @@ void	go_exec(t_pipex *data, char **envp)
 		check_bin_path(data);
 	else
 	{
-		print_tab(data->cmd_and_args);
 		if (*envp)
 			search_path(data, envp);
 		if (data->all_path)
